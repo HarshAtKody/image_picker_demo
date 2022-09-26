@@ -24,7 +24,7 @@ class ImageVideoPicker {
         fileProfile = (await ImagePicker().pickImage(source: ImageSource.camera));
       }
       else if(_imageOptions.elementAt(1) == type) {
-        fileProfile = (await ImagePicker().pickImage(source: ImageSource.gallery));
+        fileProfile = await ImagePicker().pickImage(source: ImageSource.gallery);
       }
 
       if (kDebugMode) {
