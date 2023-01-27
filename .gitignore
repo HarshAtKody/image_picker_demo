@@ -68,3 +68,4 @@ app.*.map.json
 /build/app/
 *.cmake
 windows/flutter/ephemeral/.plugin_symlinks/connectivity_plus_windows
+ios/Podfile.lock

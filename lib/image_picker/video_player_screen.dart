@@ -6,7 +6,8 @@ import 'package:video_player/video_player.dart';
 
 class VideoPlayerScreen extends StatefulWidget {
   final XFile? pickedVideo;
-  const VideoPlayerScreen({Key? key,required this.pickedVideo}) : super(key: key);
+  const VideoPlayerScreen({Key? key, required this.pickedVideo})
+      : super(key: key);
 
   @override
   State<VideoPlayerScreen> createState() => _VideoPlayerScreenState();
@@ -20,13 +21,14 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     super.initState();
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
       // if(widget.pickedVideo != null && widget.pickedVideo?.path != ''){
-        _controller = VideoPlayerController.file(File(widget.pickedVideo?.path ?? ""));
-        _controller.addListener(() {
-          setState(() {});
-        });
-        _controller.setLooping(true);
-        _controller.initialize().then((_) => setState(() {}));
-        // _controller.play();
+      _controller =
+          VideoPlayerController.file(File(widget.pickedVideo?.path ?? ""));
+      _controller.addListener(() {
+        setState(() {});
+      });
+      _controller.setLooping(true);
+      _controller.initialize().then((_) => setState(() {}));
+      // _controller.play();
       // }
     });
   }
@@ -37,28 +39,31 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-         appBar: AppBar(title: const Text("Video Player Screen"),),
-
-      body: Center(
-        child: AspectRatio(
-          aspectRatio: _controller.value.aspectRatio,
-          child: Visibility(
-              visible: widget.pickedVideo != null,
-              child: Stack(
-                children: [
-                  VideoPlayer(_controller,),
-                  _ControlsOverlay(controller: _controller,),
-                ],
-              )),
-        ), )
-    );
+        appBar: AppBar(
+          title: const Text("Video Player Screen"),
+        ),
+        body: Center(
+          child: AspectRatio(
+            aspectRatio: _controller.value.aspectRatio,
+            child: Visibility(
+                visible: widget.pickedVideo != null,
+                child: Stack(
+                  children: [
+                    VideoPlayer(
+                      _controller,
+                    ),
+                    _ControlsOverlay(
+                      controller: _controller,
+                    ),
+                  ],
+                )),
+          ),
+        ));
   }
 }
-
 
 class _ControlsOverlay extends StatelessWidget {
   const _ControlsOverlay({Key? key, required this.controller})
@@ -98,16 +103,16 @@ class _ControlsOverlay extends StatelessWidget {
           child: controller.value.isPlaying
               ? const SizedBox.shrink()
               : Container(
-            color: Colors.black26,
-            child: const Center(
-              child: Icon(
-                Icons.play_arrow,
-                color: Colors.white,
-                size: 100.0,
-                semanticLabel: 'Play',
-              ),
-            ),
-          ),
+                  color: Colors.black26,
+                  child: const Center(
+                    child: Icon(
+                      Icons.play_arrow,
+                      color: Colors.white,
+                      size: 100.0,
+                      semanticLabel: 'Play',
+                    ),
+                  ),
+                ),
         ),
         GestureDetector(
           onTap: () {
@@ -139,7 +144,10 @@ class _ControlsOverlay extends StatelessWidget {
                 vertical: 12,
                 horizontal: 16,
               ),
-              child: Text('${controller.value.captionOffset.inMilliseconds}ms', style: const TextStyle(color: Colors.tealAccent),),
+              child: Text(
+                '${controller.value.captionOffset.inMilliseconds}ms',
+                style: const TextStyle(color: Colors.tealAccent),
+              ),
             ),
           ),
         ),
@@ -168,7 +176,10 @@ class _ControlsOverlay extends StatelessWidget {
                 vertical: 12,
                 horizontal: 16,
               ),
-              child: Text('${controller.value.playbackSpeed}x', style: const TextStyle(color: Colors.tealAccent),),
+              child: Text(
+                '${controller.value.playbackSpeed}x',
+                style: const TextStyle(color: Colors.tealAccent),
+              ),
             ),
           ),
         ),

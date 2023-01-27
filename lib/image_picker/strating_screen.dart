@@ -13,12 +13,12 @@ class StartingScreen extends StatefulWidget {
 }
 
 class _ImagePickerState extends State<StartingScreen> {
-
   /// Need to Initialize First Image Picker Object
 
   File? pickedImage;
   XFile? pickedVideo;
   List<XFile>? pickedImages;
+
   /// Pick an image
   //     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
   /// Capture a photo
@@ -29,7 +29,6 @@ class _ImagePickerState extends State<StartingScreen> {
   //     final XFile? video = await _picker.pickVideo(source: ImageSource.camera);
   /// Pick multiple images
   //     final List<XFile>? images = await _picker.pickMultiImage();
-
 
   /// Need To Add this Lines for Give Support in IOS Device
   /* put this lines inside ios/Runner/Info.plist
@@ -51,63 +50,80 @@ class _ImagePickerState extends State<StartingScreen> {
            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
    */
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.amber,
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("Image Picker For Single Image", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
+        title: const Text(
+          "Image Picker For Single Image",
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
       ),
       body: Column(
         children: [
-
-          Visibility(visible: pickedImage != null,
+          Visibility(
+              visible: pickedImage != null,
               child: Image.file(
-            File(pickedImage?.path ?? ""),
-            width: 200,
-            height: 200,
-          )),
-
-
-
-          const SizedBox(height: 100,),
-          Center(
-            child: TextButton(
-              onPressed: () async {
-                  File? file = await ImageVideoPicker.instance.openPickerForImage(context);
-                  setState(() {
-                    pickedImage = file;
-                  });
-              },
-              child:const  Text("Single Image Selection"),),
+                File(pickedImage?.path ?? ""),
+                width: 200,
+                height: 200,
+              )),
+          const SizedBox(
+            height: 100,
           ),
           Center(
             child: TextButton(
               onPressed: () async {
-                XFile? file = await ImageVideoPicker.instance.openPickerForVideo(context);
+                File? file =
+                    await ImageVideoPicker.instance.openPickerForImage(context);
+                setState(() {
+                  pickedImage = file;
+                });
+              },
+              child: const Text("Single Image Selection"),
+            ),
+          ),
+          Center(
+            child: TextButton(
+              onPressed: () async {
+                XFile? file =
+                    await ImageVideoPicker.instance.openPickerForVideo(context);
                 setState(() {
                   pickedVideo = file;
                 });
-                if(pickedVideo != null) {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => VideoPlayerScreen(pickedVideo: pickedVideo,)));
+                if (pickedVideo != null) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => VideoPlayerScreen(
+                                pickedVideo: pickedVideo,
+                              )));
                 }
-                },
-              child: const Text("Single Video Selection"),),
+              },
+              child: const Text("Single Video Selection"),
+            ),
           ),
           Center(
             child: TextButton(
               onPressed: () async {
-                List<XFile>? file = await ImageVideoPicker.instance.openPickerForMultipleImages(context);
+                List<XFile>? file = await ImageVideoPicker.instance
+                    .openPickerForMultipleImages(context);
                 setState(() {
                   pickedImages = file;
                 });
-                if(pickedImages != null) {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => MultiImagePickedScreen(imageFiles: pickedImages,)));
+                if (pickedImages != null) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => MultiImagePickedScreen(
+                                imageFiles: pickedImages,
+                              )));
                 }
-                },
-              child: const Text("MultiImage Picker"),),
+              },
+              child: const Text("MultiImage Picker"),
+            ),
           ),
         ],
       ),
